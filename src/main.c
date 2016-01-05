@@ -215,11 +215,7 @@ static void window_load(Window *window) {
   
   time_t now = time(NULL);
   struct tm *tick_time = localtime(&now);
-  if (show_seconds) {
-    handle_tick(tick_time, HOUR_UNIT | MINUTE_UNIT | SECOND_UNIT);
-  } else {
-    handle_tick(tick_time, HOUR_UNIT | MINUTE_UNIT);
-  }
+  handle_tick(tick_time, HOUR_UNIT | MINUTE_UNIT | (show_seconds?SECOND_UNIT:0));
 }
 
 static void window_unload(Window *window) {
@@ -243,6 +239,8 @@ static void init() {
     .unload = window_unload,
   });
   window_stack_push(window, true);
+  
+  tick_timer_service_subscribe(HOUR_UNIT | MINUTE_UNIT | (show_seconds?SECOND_UNIT:0), handle_tick);
 
   bluetooth_connection_service_subscribe(bt_handler);
   bt_connected = bluetooth_connection_service_peek();
