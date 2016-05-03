@@ -4,6 +4,7 @@
         ""
     ],
     "companyName": "dartcatcher@gmail.com",
+    "enableMultiJS": false,
     "longName": "Twatch Popcorn",
     "projectType": "native",
     "resources": {
